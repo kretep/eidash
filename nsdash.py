@@ -9,7 +9,7 @@ import logging
 from lib.waveshare_epd import epd2in13_V2
 from PIL import Image, ImageDraw, ImageFont
 
-import nsdata
+from nsdata import NSData
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -20,6 +20,8 @@ def get_time():
 
 try:
     logging.info("epd2in13_V2 Demo")
+
+    nsdata = NSData()
 
     height = 122 #epd.width?
     width = 250 #epd.height?
