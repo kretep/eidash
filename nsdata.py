@@ -53,8 +53,8 @@ class NSData:
             bg['sgv'] = int(bg['sgv'])
         return bgs
 
-    def seconds_ago(self, timestamp):
-        return int(datetime.now().strftime('%s')) - timestamp / 1000
+    def minutes_ago(self, timestamp):
+        return int((datetime.timestamp(datetime.now()) - timestamp / 1000) / 60)
 
     def get_direction(self, entry):
         return {
@@ -68,19 +68,28 @@ class NSData:
         }.get(entry.get('direction'), '-')
 
     def get_delta(self, last, second_to_last):
-        return ('+' if last['sgv'] >= second_to_last['sgv'] else u'−') + str(abs(self.maybe_convert_units(last['sgv'] - second_to_last['sgv'])))
+        if (last['date'] - second_to_last['date']) / 1000 > 1000:
+            return '?'
+        return ('+' if last['sgv'] >= second_to_last['sgv'] else u'−') + \
+            str(abs(self.maybe_convert_units(last['sgv'] - second_to_last['sgv'])))
 
     def get_data(self):
-        self.entries = entries = self.get_entries()
-        bgs = self.filter_bgs(entries)
-        last, second_to_last = bgs[0:2]
-        if (last['date'] - second_to_last['date']) / 1000 <= 1000:
-            delta = self.get_delta(last, second_to_last)
-        else:
-            delta = '?'
+        minutes_ago = -1
+        bgs = self.filter_bgs(self.entries)
+        if len(bgs) > 1:
+            last, second_to_last = bgs[0:2]
+            minutes_ago = self.minutes_ago(last['date'])
+
+        # Check whether it is useful to get new data
+        if minutes_ago >= 5 or minutes_ago < 0:
+            self.entries = entries = self.get_entries()
+            bgs = self.filter_bgs(entries)
+            last, second_to_last = bgs[0:2]
+            minutes_ago = self.minutes_ago(last['date'])
+
         return {
             "sgv": self.maybe_convert_units(last['sgv']),
             "direction": self.get_direction(last),
-            "minutes_ago": int(self.seconds_ago(last['date']) / 60),
-            "delta": delta
+            "minutes_ago": minutes_ago,
+            "delta": self.get_delta(last, second_to_last)
         }
