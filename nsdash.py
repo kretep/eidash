@@ -24,13 +24,19 @@ try:
     epd = epd2in13_V2.EPD()
     logging.info("init and Clear")
     epd.init(epd.FULL_UPDATE)
-    #epd.Clear(0xFF)
     epd.displayPartBaseImage(epd.getbuffer(nsdraw.image))
     epd.init(epd.PART_UPDATE)
 
     while True:
         # Retrieve data
         data = nsdata.get_data()
+
+        # Once in a while, do a full clear
+        if datetime.now().minute == 0:
+            logging.info("Periodical full clear")
+            epd.init(epd.FULL_UPDATE)
+            epd.Clear(0xFF)
+            epd.init(epd.PART_UPDATE)
 
         # Draw
         nsdraw.draw_data(data)

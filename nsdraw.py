@@ -16,11 +16,14 @@ class NSDraw:
         self.font = ImageFont.truetype(os.environ['NSDASH_FONT'], size=42)
         self.font2 = ImageFont.truetype(os.environ['NSDASH_FONT'], size=20)
 
+    def clear_image(self):
+        self.draw.rectangle((0, 0, self.width, self.height), fill=white)
+        
     def draw_data(self, data):
         draw = self.draw
 
         # Clear
-        draw.rectangle((0, 0, self.width, self.height), fill=white)
+        self.clear_image()
         
         # Main value
         main_text = f'{data["sgv"]}{data["direction"]}'
