@@ -35,7 +35,8 @@ try:
         if datetime.now().minute == 0:
             logging.info("Periodical full clear")
             epd.init(epd.FULL_UPDATE)
-            epd.Clear(0xFF)
+            nsdraw.clear_image()
+            epd.displayPartBaseImage(epd.getbuffer(nsdraw.image))
             epd.init(epd.PART_UPDATE)
 
         # Draw
