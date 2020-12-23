@@ -43,7 +43,7 @@ try:
         nsdraw.draw_data(data)
 
         # Display
-        epd.displayPartial(epd.getbuffer(nsdraw.image))
+        epd.displayPartial(epd.getbuffer(nsdraw.image.rotate(180)))
 
         # Sleep until the next minute
         seconds_to_go = 60 - datetime.now().second
