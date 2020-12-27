@@ -4,27 +4,14 @@
 # Copyright 2011 Álvaro Justen [alvarojusten at gmail dot com]
 # License: GPL <http://www.gnu.org/copyleft/gpl.html>
 
-import Image
-import ImageDraw
-import ImageFont
+from PIL import ImageFont
 
 
 class ImageText(object):
-    def __init__(self, filename_or_size, mode='RGBA', background=(0, 0, 0, 0),
-                 encoding='utf8'):
-        if isinstance(filename_or_size, str):
-            self.filename = filename_or_size
-            self.image = Image.open(self.filename)
-            self.size = self.image.size
-        elif isinstance(filename_or_size, (list, tuple)):
-            self.size = filename_or_size
-            self.image = Image.new(mode, self.size, color=background)
-            self.filename = None
-        self.draw = ImageDraw.Draw(self.image)
-        self.encoding = encoding
-
-    def save(self, filename=None):
-        self.image.save(filename or self.filename)
+    def __init__(self, image, draw):
+        self.image = image
+        self.draw = draw
+        self.size = self.image.size
 
     def get_font_size(self, text, font, max_width=None, max_height=None):
         if max_width is None and max_height is None:
@@ -42,10 +29,9 @@ class ImageText(object):
             font_size += 1
             text_size = self.get_text_size(font, font_size, text)
 
-    def write_text(self, (x, y), text, font_filename, font_size=11,
+    def write_text(self, xy, text, font_filename, font_size=11,
                    color=(0, 0, 0), max_width=None, max_height=None):
-        if isinstance(text, str):
-            text = text.decode(self.encoding)
+        (x, y) = xy
         if font_size == 'fill' and \
            (max_width is not None or max_height is not None):
             font_size = self.get_font_size(text, font_filename, max_width,
@@ -63,9 +49,10 @@ class ImageText(object):
         font = ImageFont.truetype(font_filename, font_size)
         return font.getsize(text)
 
-    def write_text_box(self, (x, y), text, box_width, font_filename,
+    def write_text_box(self, xy, text, box_width, font_filename,
                        font_size=11, color=(0, 0, 0), place='left',
                        justify_last_line=False):
+        (x, y) = xy
         lines = []
         line = []
         words = text.split()
