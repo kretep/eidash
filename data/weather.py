@@ -1,12 +1,25 @@
+from datetime import datetime, timedelta
 import os
 import requests
 
 class WeatherData:
 
     def __init__(self):
-        pass
+        self.data = {}
+        self.last_refetch_time = None
 
     def get_data(self):
+        if self.needs_refetch():
+            try:
+                data = self.refetch()
+                if bool(data):
+                    self.data = data
+                    self.last_refetch_time = datetime.now()
+            except:
+                pass
+        return self.data
+
+    def refetch(self):
         try:
             wl_key = os.environ['HKDASH_WL_KEY']
             wl_location = os.environ['HKDASH_WL_LOCATION']
@@ -29,3 +42,9 @@ class WeatherData:
                 return {}
         except simplejson.scanner.JSONDecodeError:
             return {}
+
+    def needs_refetch(self):
+        if self.last_refetch_time == None:
+            return True
+        elapsed = datetime.now() - self.last_refetch_time
+        return elapsed >= timedelta(minutes=15)
