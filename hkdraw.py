@@ -21,7 +21,7 @@ class HKDraw:
     def clear_image(self):
         self.draw.rectangle((0, 0, self.width, self.height), fill=white)
         
-    def draw_data(self, data, nsd):
+    def draw_data(self, data):
         draw = self.draw
 
         # Clear
@@ -33,15 +33,17 @@ class HKDraw:
         
         # Weather
         y1 = 50
-        draw_weather.draw_wind(draw, 10, y1, 64, 80, self.font2, data)
-        draw_weather.draw_temp(draw, 100, y1, 80, 80, self.font, self.font2, data)
-        draw_weather.draw_forecast(draw, self.image_text, 280, y1, 400, 0, self.font2, data)
-        if data["alarm"] == "1":
-            draw_weather.draw_warning(draw, self.image_text, 10, 150, 700, 200, self.font2, data)
+        weatherData = data["weather"]
+        draw_weather.draw_wind(draw, 10, y1, 64, 80, self.font2, weatherData)
+        draw_weather.draw_temp(draw, 100, y1, 80, 80, self.font, self.font2, weatherData)
+        draw_weather.draw_forecast(draw, self.image_text, 280, y1, 400, 0, self.font2, weatherData)
+        if weatherData["alarm"] == "1":
+            draw_weather.draw_warning(draw, self.image_text, 10, 150, 700, 200, self.font2, weatherData)
         
         # Moon
-        draw_moonphase.draw_moon_phase(draw, 745, 80, 30, data["moonphase"])
+        ephemData = data["ephem"]
+        draw_moonphase.draw_moon_phase(draw, 745, 80, 30, ephemData)
 
         # Nightscout
-        draw_nightscout.draw_nightscout(draw, 650, 150, 300, 100, self.font, self.font2, nsd)
-
+        nightScoutData = data["nightscout"]
+        draw_nightscout.draw_nightscout(draw, 650, 150, 300, 100, self.font, self.font2, nightScoutData)

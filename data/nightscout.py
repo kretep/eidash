@@ -1,13 +1,8 @@
-#!/usr/bin/python
-# -*- coding: <encoding name> -*-
- 
 from datetime import datetime
 import requests
 import os
 
-class NightscoutException(Exception): pass
-
-class NSData:
+class NightscoutData:
 
     def __init__(self):
         self.entries = []
@@ -15,7 +10,7 @@ class NSData:
     def get_entries(self, retries=0, last_exception=None):
         if retries >= 3:
             print("Retried too many times: %s" % last_exception)
-            raise NightscoutException(last_exception)
+            raise Exception(last_exception)
 
         try:
             host = os.environ['NSDASH_URL']
@@ -27,7 +22,7 @@ class NSData:
             # Don't retry timeouts, since the app is unresponsive while a request is in progress,
             # and a new request will be made in UPDATE_FREQUENCY_SECONDS seconds anyway.
             print("Timed out: %s" % repr(e))
-            raise NightscoutException(repr(e))
+            raise Exception(repr(e))
         except requests.exceptions.RequestException as e:
             return self.get_entries(retries + 1, repr(e))
 

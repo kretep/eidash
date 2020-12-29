@@ -4,6 +4,8 @@
 # Copyright 2011 Álvaro Justen [alvarojusten at gmail dot com]
 # License: GPL <http://www.gnu.org/copyleft/gpl.html>
 
+# Adapted from: https://gist.github.com/turicas/1455973
+
 from PIL import ImageFont
 
 

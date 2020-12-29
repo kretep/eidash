@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 from lib.waveshare_epd import epd2in13_V2
 
-from nsdata import NSData
+from data.nightscout import NightscoutData
 from nsdraw import NSDraw
 
 logging.basicConfig(level=logging.DEBUG)
@@ -18,7 +18,7 @@ try:
     height = 122 #epd.width?
     width = 250 #epd.height?
 
-    nsdata = NSData()
+    nsdata = NightscoutData()
     nsdraw = NSDraw(width, height)
 
     epd = epd2in13_V2.EPD()

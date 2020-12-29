@@ -1,23 +1,12 @@
-import datetime
-import ephem
-
 import os
 import requests
 
-class HKData:
+class WeatherData:
 
     def __init__(self):
         pass
 
-    def get_moon_age_fraction(self):
-        date = ephem.Date(datetime.datetime.now())
-        nnm = ephem.next_new_moon(date)
-        pnm = ephem.previous_new_moon(date)
-        lunation = (date - pnm) / (nnm - pnm)
-        return lunation
-
-    def get_weather_data(self):
-
+    def get_data(self):
         try:
             wl_key = os.environ['HKDASH_WL_KEY']
             wl_location = os.environ['HKDASH_WL_LOCATION']
@@ -40,4 +29,3 @@ class HKData:
                 return {}
         except simplejson.scanner.JSONDecodeError:
             return {}
-

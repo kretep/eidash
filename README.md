@@ -18,11 +18,15 @@ sudo apt-get install python3-pip
 sudo apt-get install python3-pil
 sudo apt-get install python3-numpy
 sudo pip3 install RPi.GPIO
+sudo pip3 install ephem
 ```
 
 Do not install pil and numpy with pip, as these do not install some required native libraries.
 
 It doesn't seem there is an up-to-date packaged distribution of the waveshare epd libraries, so lib/waveshare_epd is simply a copy of the libraries at https://github.com/waveshare/e-Paper/tree/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd
+
+## Enable SPI
+In `sudo raspi-config` > Interface options > SPI, enable SPI.
 
 ## Make sure you have fonts
 If you are running headless, your system likely has no fonts. Download some here: https://dejavu-fonts.github.io/
@@ -35,4 +39,32 @@ Doesn't matter where you do this, /etc/environment is a convenient place. These 
 ```
 export NSDASH_URL=<your nightscout site>
 export NSDASH_FONT=<path to your font file>
+export HKDASH_WL_KEY=<weerlive API key>
+export HKDASH_WL_LOCATION=<weerlive location>
 ```
+
+## Install locale
+
+List installed locales: `locale -a`
+
+Generate locales:
+```
+sudo dpkg-reconfigure locales
+```
+Use space bar to select, use None for default.
+
+## Connect e-Paper HAT with wires
+
+See https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT > Hardware/Software setup
+and https://pinout.xyz/
+
+HAT|RPI BCM2835|RPI Board
+:---: | :---: | :---:
+VCC|3.3V|3.3V
+GND|GND|GND
+DIN|MOSI|Pin 19
+CLK|SCLK|Pin 23
+CS|CE0|Pin 24
+DC|GPIO 25|Pin 22
+RST|GPIO 17|Pin 11
+BUSY|GPIO 24|Pin 18
