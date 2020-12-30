@@ -4,6 +4,7 @@ import os
 from .date_time import *
 from .moonphase import *
 from .nightscout import *
+from .nightscout_pixel import *
 from .weather import *
 
 black = 0
@@ -50,3 +51,4 @@ class HKDraw:
         # Nightscout
         nightScoutData = data["nightscout"]
         draw_nightscout(draw, 650, 150, 300, 100, self.font, self.font2, nightScoutData)
+        draw_ns_pixel(nightScoutData)
