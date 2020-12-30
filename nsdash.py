@@ -8,7 +8,7 @@ import logging
 from lib.waveshare_epd import epd2in13_V2
 
 from data.nightscout import NightscoutData
-from nsdraw import NSDraw
+from draw.nsdraw import NSDraw
 
 logging.basicConfig(level=logging.DEBUG)
 

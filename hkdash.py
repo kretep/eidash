@@ -8,7 +8,7 @@ import locale
 import logging
 from lib.waveshare_epd import epd7in5_V2
 
-from hkdraw import HKDraw
+from draw.hkdraw import HKDraw
 from data.nightscout import NightscoutData
 from data.weather import WeatherData
 from data.ephem import EphemData

@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
-import draw_datetime, draw_nightscout
+from .date_time import *
+from .nightscout import *
 
 black = 0
 white = 1
@@ -21,5 +22,5 @@ class NSDraw:
         
     def draw_data(self, data):
         self.clear_image()
-        draw_datetime.draw_time(self.draw, self.width - 4, 4, self.font2)
-        draw_nightscout.draw_nightscout(self.draw, 10, 10, 150, 100, self.font, self.font2, data)
+        draw_time(self.draw, self.width - 4, 4, self.font2)
+        draw_nightscout(self.draw, 10, 10, 150, 100, self.font, self.font2, data)
