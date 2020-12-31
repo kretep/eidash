@@ -8,10 +8,11 @@ import locale
 import logging
 from lib.waveshare_epd import epd7in5_V2
 
-from draw.hkdraw import HKDraw
 from data.nightscout import NightscoutData
 from data.weather import WeatherData
 from data.ephem import EphemData
+from draw.hkdraw import HKDraw
+from pixel.nightscout_pixel import draw_ns_pixel
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -43,6 +44,9 @@ try:
 
         # Draw
         hkdraw.draw_data(data)
+
+        # Pixel
+        draw_ns_pixel(data["nightscout"])
 
         # Display
         epd.display(epd.getbuffer(hkdraw.image))

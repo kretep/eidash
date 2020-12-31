@@ -14,7 +14,7 @@ num_pixels = 1
 ORDER = neopixel.GRB
 
 pixels = neopixel.NeoPixel(
-    pixel_pin, num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
+    pixel_pin, num_pixels, brightness=0.2, auto_write=True, pixel_order=ORDER
 )
 
 color_map = [
