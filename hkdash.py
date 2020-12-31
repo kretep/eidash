@@ -48,7 +48,9 @@ try:
         epd.display(epd.getbuffer(hkdraw.image))
 
         # Sleep until the next minute
-        seconds_to_go = 60 - datetime.now().second
+        now = datetime.now()
+        minutes_to_go = 4 - now.minute % 5
+        seconds_to_go = 60 - now.second + minutes_to_go * 60
         print("Sleeping for ", seconds_to_go, " seconds")
         time.sleep(seconds_to_go)
 
