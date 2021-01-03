@@ -5,6 +5,7 @@ from .date_time import *
 from .moonphase import *
 from .nightscout import *
 from .weather import *
+from .birthdays import *
 
 black = 0
 white = 1
@@ -50,3 +51,7 @@ class HKDraw:
         # Nightscout
         nightScoutData = data["nightscout"]
         draw_nightscout(draw, 650, 150, 300, 100, self.font, self.font2, nightScoutData)
+
+        # Birthdays
+        birthdayData = data["birthdays"]
+        draw_birthdays(draw, 10, self.height-50, self.font2, birthdayData)

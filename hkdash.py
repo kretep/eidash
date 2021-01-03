@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
+from data.birthdays import BirthdayData
 import time
 from datetime import datetime
 import locale
@@ -11,6 +12,7 @@ from lib.waveshare_epd import epd7in5_V2
 from data.nightscout import NightscoutData
 from data.weather import WeatherData
 from data.ephem import EphemData
+from data.birthdays import BirthdayData
 from draw.hkdraw import HKDraw
 from pixel.nightscout_pixel import draw_ns_pixel
 
@@ -28,6 +30,7 @@ try:
     nightscoutData = NightscoutData()
     weatherData = WeatherData()
     ephemData = EphemData()
+    birthdayData = BirthdayData()
     hkdraw = HKDraw(width, height)
 
     logging.info("init and Clear")
@@ -39,7 +42,8 @@ try:
         data = {
             "nightscout": nightscoutData.get_data(),
             "weather": weatherData.get_data(),
-            "ephem": ephemData.get_data()
+            "ephem": ephemData.get_data(),
+            "birthdays": birthdayData.get_data()
         }
 
         # Draw
