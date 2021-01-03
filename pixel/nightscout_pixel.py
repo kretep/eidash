@@ -35,7 +35,7 @@ def draw_ns_pixel(data):
     hue = 270
     for p1, p2 in zip(color_map[:-1], color_map[1:]):
         if p1[0] <= sgv < p2[0]:
-            hue = (sgv - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + p1[1]
+            hue = ((sgv - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + p1[1]) % 360
             break
 
     rgb = colorsys.hsv_to_rgb(hue / 360, 1.0, 1.0)
