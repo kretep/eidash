@@ -38,5 +38,9 @@ def draw_ns_pixel(data):
             hue = ((sgv - p1[0]) / (p2[0] - p1[0]) * (p2[1] - p1[1]) + p1[1]) % 360
             break
 
-    rgb = colorsys.hsv_to_rgb(hue / 360, 1.0, 1.0)
+    # Set the pixel
+    set_pixel_color(hue, 1.0, 0.3)
+
+def set_pixel_color(hue, saturation, value):
+    rgb = colorsys.hsv_to_rgb(hue / 360, saturation, value)
     pixels.fill([int(c * 255) for c in rgb])

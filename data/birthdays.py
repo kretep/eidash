@@ -18,7 +18,7 @@ class BirthdayData:
 
     def fetch_data(self):
         transport = RequestsHTTPTransport(url=os.environ["HKDASH_BIRTHDAY_URL"])
-        client = Client(transport=transport, fetch_schema_from_transport=True)
+        client = Client(transport=transport, fetch_schema_from_transport=False)
 
         query = gql("""
         query MyQuery ($month: Int!, $day: Int!) {

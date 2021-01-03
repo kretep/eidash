@@ -35,7 +35,6 @@ try:
 
     logging.info("init and Clear")
     epd.init()
-    epd.Clear()
 
     while True:
         # Retrieve data
