@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
+from data.sunspots import SunspotData
 from data.birthdays import BirthdayData
 import time
 from datetime import datetime
@@ -31,6 +32,7 @@ try:
     weatherData = WeatherData()
     ephemData = EphemData()
     birthdayData = BirthdayData()
+    sunspotData = SunspotData()
     hkdraw = HKDraw(width, height)
 
     logging.info("init and Clear")
@@ -42,7 +44,8 @@ try:
             "nightscout": nightscoutData.get_data(),
             "weather": weatherData.get_data(),
             "ephem": ephemData.get_data(),
-            "birthdays": birthdayData.get_data()
+            "birthdays": birthdayData.get_data(),
+            "sunspots": sunspotData.get_data()
         }
 
         # Draw

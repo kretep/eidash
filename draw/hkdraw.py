@@ -6,6 +6,7 @@ from .moonphase import *
 from .nightscout import *
 from .weather import *
 from .birthdays import *
+from draw.sunspots import draw_sunspots
 
 black = 0
 white = 1
@@ -38,15 +39,18 @@ class HKDraw:
         # Weather
         y1 = 50
         weatherData = data["weather"]
-        draw_wind(draw, 10, y1, 64, 80, self.font2, weatherData)
-        draw_temp(draw, 100, y1, 80, 80, self.font, self.font2, weatherData)
-        draw_forecast(draw, self.image_text, 280, y1, 400, 0, self.font2, weatherData)
+        draw_wind(draw, 110, y1, 64, 80, self.font2, weatherData)
+        draw_temp(draw, 200, y1, 80, 80, self.font, self.font2, weatherData)
+        draw_forecast(draw, self.image_text, 110, y1+84, 400, 0, self.font2, weatherData)
         if weatherData["alarm"] == "1":
             draw_warning(draw, self.image_text, 10, 150, 700, 200, self.font2, weatherData)
         
         # Moon
         ephemData = data["ephem"]
-        draw_moon_phase(draw, 745, 80, 30, ephemData)
+        draw_moon_phase(draw, 748, 80, 36, ephemData)
+
+        # Sunspots
+        draw_sunspots(self.image, 10, 80-36, 72, 72, data["sunspots"])
 
         # Nightscout
         nightScoutData = data["nightscout"]
