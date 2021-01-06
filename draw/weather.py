@@ -1,6 +1,7 @@
 import os
 import math
 import numpy as np
+from datetime import datetime, timedelta
 
 weather_icons = {
     "zonnig": "\ue92c",
@@ -89,3 +90,34 @@ def draw_warning(context, x, y, w, h, data):
     text = data["alarmtxt"]
     context.image_text.write_text_box((x,y), text, box_width=w, \
         font_filename=os.environ['NSDASH_FONT'], font_size=18, color=context.black)
+
+def draw_forecast_table(context, x, y, column_width, row_height, data):
+    draw = context.draw
+    font = context.font_small
+    h = 5 * row_height
+    now = datetime.now()
+    
+    for i in range(5):
+        text = ["", "Verw", "Temp", "Wind", "Zon/reg"][i]
+        draw.text((x, y + i * row_height), text, font=font)
+
+    for i in range(3):
+        line_x = x + (i+1) * column_width - 4
+        draw.line([(line_x, y), (line_x, y+h)])
+        
+        day = now + timedelta(days=i)
+        day_text = day.strftime('%a')
+        draw.text((x + (i+1) * column_width, y), day_text, font=font)
+        
+        weersplit = data[f'd{i}weer'].split('_')
+        icon_text = ''.join([weather_icons[weer] for weer in weersplit])
+        draw.text((x + (i+1) * column_width, y + 1 * row_height - 10), icon_text, font=context.font_icons_small)
+        
+        temp_text = f"{data[f'd{i}tmax']}/{data[f'd{i}tmin']}°C"
+        draw.text((x + (i+1) * column_width, y + 2 * row_height), temp_text, font=font)
+        
+        wind_text = f"{data[f'd{i}windr']} {data[f'd{i}windk']}"
+        draw.text((x + (i+1) * column_width, y + 3 * row_height), wind_text, font=font)
+        
+        sun_rain_text = f"{data[f'd{i}zon']}/{data[f'd{i}neerslag']}%"
+        draw.text((x + (i+1) * column_width, y + 4 * row_height), sun_rain_text, font=font)

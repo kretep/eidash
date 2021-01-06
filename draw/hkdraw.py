@@ -16,6 +16,7 @@ class HKDraw:
         self.context.font_normal = ImageFont.truetype(os.environ['NSDASH_FONT'], size=30)
         self.context.font_small = ImageFont.truetype(os.environ['NSDASH_FONT'], size=18)
         self.context.font_weather_icons = ImageFont.truetype(os.path.join('fonts', 'weather-iconic.ttf'), size=80)
+        self.context.font_icons_small = ImageFont.truetype(os.path.join('fonts', 'weather-iconic.ttf'), size=40)
 
     def clear_image(self):
         self.context.draw.rectangle((0, 0, self.context.width, 
@@ -38,6 +39,7 @@ class HKDraw:
         draw_temp(context, 300, y1, 80, 80, weatherData)
         draw_wind(context, 500, y1, 64, 80, weatherData)
         draw_forecast(context, 110, y1+84, 400, 0, weatherData)
+        draw_forecast_table(context, 100, 200, 100, 30, weatherData)
         if weatherData["alarm"] == "1":
             draw_warning(context, 10, 150, 700, 200, weatherData)
         
