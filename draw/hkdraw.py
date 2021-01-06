@@ -22,6 +22,7 @@ class HKDraw:
 
         self.font = ImageFont.truetype(os.environ['NSDASH_FONT'], size=30)
         self.font2 = ImageFont.truetype(os.environ['NSDASH_FONT'], size=18)
+        self.font3 = ImageFont.truetype(os.path.join('fonts', 'weather-iconic.ttf'), size=80)
 
     def clear_image(self):
         self.draw.rectangle((0, 0, self.width, self.height), fill=white)
@@ -39,8 +40,9 @@ class HKDraw:
         # Weather
         y1 = 50
         weatherData = data["weather"]
-        draw_wind(draw, 110, y1, 64, 80, self.font2, weatherData)
-        draw_temp(draw, 200, y1, 80, 80, self.font, self.font2, weatherData)
+        draw_current(self.image, draw, self.image_text, 110, y1, 140, 80, self.font2, self.font3, weatherData)
+        draw_temp(draw, 300, y1, 80, 80, self.font, self.font2, weatherData)
+        draw_wind(draw, 500, y1, 64, 80, self.font2, weatherData)
         draw_forecast(draw, self.image_text, 110, y1+84, 400, 0, self.font2, weatherData)
         if weatherData["alarm"] == "1":
             draw_warning(draw, self.image_text, 10, 150, 700, 200, self.font2, weatherData)
@@ -54,7 +56,7 @@ class HKDraw:
 
         # Nightscout
         nightScoutData = data["nightscout"]
-        draw_nightscout(draw, 650, 150, 300, 100, self.font, self.font2, nightScoutData)
+        draw_nightscout(draw, 650, self.height-100, 300, 100, self.font, self.font2, nightScoutData)
 
         # Birthdays
         birthdayData = data["birthdays"]

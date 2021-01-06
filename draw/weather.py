@@ -5,8 +5,38 @@ import numpy as np
 black = 0
 white = 1
 
+weather_icons = {
+    "zonnig": "\ue92c",
+    "bliksem": "\ue918",
+    "regen": "\ue905",
+    "buien": "\ue906",
+    "hagel": "\ue917",
+    "mist": "\ue916",
+    "sneeuw": "\ue92b",
+    "bewolkt": "\ue902",
+    "halfbewolkt": "\ue92d",
+    "zwaarbewolkt": "\ue90b",
+    "nachtmist": "\ue920",
+    "helderenacht": "\ue926",
+    "wolkennacht": "\ue91a",
+}
+
+def draw_current(image, draw, image_text, x, y, w, h, font, icon_font, data):
+    # Text
+    text = data["samenv"]
+    text_dim = draw.textsize(text, font)
+    image_text.write_text_box((x,y+h-2*text_dim[1]), text, box_width=w, \
+        font_filename=os.environ['NSDASH_FONT'], font_size=18, color=black)
+
+    # Icon
+    icon_text = weather_icons[data["image"]]
+    icon_dim = draw.textsize(icon_text, font=icon_font)
+    draw.text((x + w/2 - icon_dim[0]/2, y-10), icon_text, font=icon_font)
+
 wind_dir_names = ["Zuid", "ZZO", "ZO", "OZO", "Oost", "ONO", "NO", "NNO", 
         "Noord", "NNW", "NW", "WNW", "West", "WZW", "ZW", "ZZW"]
+wind_dir_names_verw = ["Z", "ZZO", "ZO", "OZO", "O", "ONO", "NO", "NNO", 
+        "N", "NNW", "NW", "WNW", "W", "WZW", "ZW", "ZZW"] # and VAR for variable
 
 def draw_wind(draw, x, y, w, h, font, data):
     # Text
@@ -53,7 +83,7 @@ def draw_temp(draw, x, y, w, h, font, font2, data):
     draw.text((x, y+text_dim[1]+4), text2, font=font2)
 
 def draw_forecast(draw, image_text, x, y, w, h, font, data):
-    text = data["verw"]
+    text = f'Verw: {data["verw"]}'
     image_text.write_text_box((x, y), text, box_width=w, \
         font_filename=os.environ['NSDASH_FONT'], font_size=18, color=black)
 
