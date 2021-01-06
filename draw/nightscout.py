@@ -1,13 +1,10 @@
 
-black = 0
-white = 1
-
-def draw_nightscout(draw, x, y, w, h, font, font2, data):
+def draw_nightscout(context, x, y, w, h, data):
     # Main value
     main_text = f'{data["sgv"]}{data["direction"]}'
-    draw.text((x, y), main_text, font=font, fill=black)
+    context.draw.text((x, y), main_text, font=context.font_normal, fill=context.black)
 
     # Delta
-    main_size = draw.textsize(main_text, font)
+    main_size = context.draw.textsize(main_text, context.font_normal)
     delta_text = f'{data["delta"]}\n[{data["minutes_ago"]}m]'
-    draw.text((x + main_size[0], y), delta_text, font=font2, fill=black)
+    context.draw.text((x + main_size[0], y), delta_text, font=context.font_small, fill=context.black)

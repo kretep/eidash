@@ -1,26 +1,17 @@
-from PIL import Image, ImageDraw, ImageFont
+from draw.drawcontext import DrawContext
+from PIL import ImageFont
 import os
 from .date_time import *
 from .nightscout import *
 
-black = 0
-white = 1
-
 class NSDraw:
 
     def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.image = Image.new('1', (width, height), white)
-        self.draw = ImageDraw.Draw(self.image)
+        self.context = DrawContext(width, height)
+        self.context.font_normal = ImageFont.truetype(os.environ['NSDASH_FONT'], size=36)
+        self.context.font_small = ImageFont.truetype(os.environ['NSDASH_FONT'], size=18)
 
-        self.font = ImageFont.truetype(os.environ['NSDASH_FONT'], size=36)
-        self.font2 = ImageFont.truetype(os.environ['NSDASH_FONT'], size=18)
-
-    def clear_image(self):
-        self.draw.rectangle((0, 0, self.width, self.height), fill=white)
-        
     def draw_data(self, data):
-        self.clear_image()
-        draw_time(self.draw, self.width - 4, 4, self.font2)
-        draw_nightscout(self.draw, 10, 10, 150, 100, self.font, self.font2, data)
+        self.context.clear_image()
+        draw_time(self.context, self.context.width - 4, 4, self.context.font_small)
+        draw_nightscout(self.context, 10, 10, 150, 100, data)

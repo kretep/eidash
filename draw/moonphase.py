@@ -1,9 +1,9 @@
 import math
 
-black = 0
-white = 1
-
-def draw_moon_phase(draw, x, y, r, data):
+def draw_moon_phase(context, x, y, r, data):
+    draw = context.draw
+    black = context.black
+    white = context.white
     f = data["moon_age_fraction"] # value between 0 and 1, where 0.5=full moon
     b = 1
     r2 = r + b
