@@ -35,11 +35,11 @@ class HKDraw:
         # Weather
         y1 = 50
         weatherData = data["weather"]
-        draw_current(context, 110, y1, 140, 80, weatherData)
-        draw_temp(context, 300, y1, 80, 80, weatherData)
-        draw_wind(context, 500, y1, 64, 80, weatherData)
-        draw_forecast(context, 110, y1+84, 400, 0, weatherData)
-        draw_forecast_table(context, 100, 200, 100, 30, weatherData)
+        draw_current(context, 120, y1, 140, 80, weatherData)
+        draw_temp(context, 260, y1, 80, 80, weatherData)
+        draw_wind(context, 400, y1, 64, 80, weatherData)
+        draw_forecast(context, 120, y1+84, 400, 0, weatherData)
+        draw_forecast_table(context, 120, 200, 100, 30, weatherData)
         if weatherData["alarm"] == "1":
             draw_warning(context, 10, 150, 700, 200, weatherData)
         

@@ -42,12 +42,12 @@ def draw_wind(context, x, y, w, h, data):
     text = f'{data["windr"]} {data["winds"]}'
     text_dim = context.draw.textsize(text, context.font_small)
     context.draw.text((x, y+h-text_dim[1]), text, font=context.font_small)
-    
+
     # Arrow
     windr = data["windr"]
     if windr in wind_dir_names:
         angle = wind_dir_names.index(windr) / len(wind_dir_names) * 360
-        draw_arrow(context, x, y, w, angle, 3)
+        draw_arrow(context, x+5, y, w-10, angle, 3)
 
 def draw_arrow(context, x, y, d, angle, line_width):
     phi = angle / 360 * 2 * math.pi

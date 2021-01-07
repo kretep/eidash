@@ -43,7 +43,7 @@ class SunspotData:
         img_erode = cv2.erode(img_thresh, kernel)
 
         # Process background
-        kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
+        kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (45, 45))
         img_dilate = cv2.dilate(img_erode, kernel2)
         img_invert = 255 - img_dilate
 
