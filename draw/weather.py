@@ -20,8 +20,6 @@ weather_icons = {
 }
 
 def draw_current(context, x, y, w, h, data):
-    context.draw.rectangle([(x,y), (x+w,y+h)])
-
     # Icon
     icon_text = weather_icons[data["image"]]
     icon_dim = context.draw.textsize(icon_text, font=context.font_weather_icons)
@@ -40,8 +38,6 @@ wind_dir_names_verw = ["Z", "ZZO", "ZO", "OZO", "O", "ONO", "NO", "NNO",
         "N", "NNW", "NW", "WNW", "W", "WZW", "ZW", "ZZW"] # and VAR for variable
 
 def draw_wind(context, x, y, w, h, arrow_r, data):
-    context.draw.rectangle([(x,y), (x+w,y+h)])
-
     # Text
     text = f'{data["windr"]} {data["winds"]}'
     text_dim = context.draw.textsize(text, context.font_small)
@@ -80,8 +76,6 @@ def draw_arrow(context, cx, cy, r, angle, line_width):
     map(lambda p: context.draw.circle(p, r, context.black), pts)
 
 def draw_temp(context, x, y, w, h, data):
-    context.draw.rectangle([(x,y), (x+w,y+h)])
-
     # Temperature
     text = f'{data["temp"]}°C'
     context.image_text.write_text_box(x, y, text, w, font=context.font_normal,
