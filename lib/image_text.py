@@ -51,16 +51,16 @@ class ImageText(object):
         font = ImageFont.truetype(font_filename, font_size)
         return font.getsize(text)
 
-    def write_text_box(self, xy, text, box_width, font_filename,
-                       font_size=11, color=(0, 0, 0), place='left',
+    def write_text_box(self, x, y, text, box_width, font,
+                       color=(0, 0, 0), align='left',
                        justify_last_line=False):
-        (x, y) = xy
+        text_height = 0
         lines = []
         line = []
         words = text.split()
         for word in words:
             new_line = ' '.join(line + [word])
-            size = self.get_text_size(font_filename, font_size, new_line)
+            size = font.getsize(new_line)
             text_height = size[1]
             if size[0] <= box_width:
                 line.append(word)
@@ -70,43 +70,34 @@ class ImageText(object):
         if line:
             lines.append(line)
         lines = [' '.join(line) for line in lines if line]
-        height = y
+        line_y = y
         for index, line in enumerate(lines):
-            height += text_height
-            if place == 'left':
-                self.write_text((x, height), line, font_filename, font_size,
-                                color)
-            elif place == 'right':
-                total_size = self.get_text_size(font_filename, font_size, line)
+            if align == 'left':
+                self.draw.text((x, line_y), line, font=font, fill=color)
+            elif align == 'right':
+                total_size = font.getsize(line)
                 x_left = x + box_width - total_size[0]
-                self.write_text((x_left, height), line, font_filename,
-                                font_size, color)
-            elif place == 'center':
-                total_size = self.get_text_size(font_filename, font_size, line)
+                self.draw.text((x_left, line_y), line, font=font, fill=color)
+            elif align == 'center':
+                total_size = font.getsize(line)
                 x_left = int(x + ((box_width - total_size[0]) / 2))
-                self.write_text((x_left, height), line, font_filename,
-                                font_size, color)
-            elif place == 'justify':
+                self.draw.text((x_left, line_y), line, font=font, fill=color)
+            elif align == 'justify':
                 words = line.split()
                 if (index == len(lines) - 1 and not justify_last_line) or \
-                   len(words) == 1:
-                    self.write_text((x, height), line, font_filename, font_size,
-                                    color)
+                    len(words) == 1:
+                    self.draw.text((x, line_y), line, font=font, fill=color)
                     continue
                 line_without_spaces = ''.join(words)
-                total_size = self.get_text_size(font_filename, font_size,
-                                                line_without_spaces)
+                total_size = font.getsize(line_without_spaces)
                 space_width = (box_width - total_size[0]) / (len(words) - 1.0)
-                start_x = x
+                word_x = x
                 for word in words[:-1]:
-                    self.write_text((start_x, height), word, font_filename,
-                                    font_size, color)
-                    word_size = self.get_text_size(font_filename, font_size,
-                                                    word)
-                    start_x += word_size[0] + space_width
-                last_word_size = self.get_text_size(font_filename, font_size,
-                                                    words[-1])
+                    self.draw.text((word_x, line_y), word, font=font, fill=color)
+                    word_size = font.getsize(word)
+                    word_x += word_size[0] + space_width
+                last_word_size = font.getsize(words[-1])
                 last_word_x = x + box_width - last_word_size[0]
-                self.write_text((last_word_x, height), words[-1], font_filename,
-                                font_size, color)
-        return (box_width, height - y)
+                self.draw.text((last_word_x, line_y), words[-1], font=font, fill=color)
+            line_y += text_height
+        return (box_width, line_y - y)
