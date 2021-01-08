@@ -11,12 +11,12 @@ from draw.sunspots import draw_sunspots
 
 class HKDraw:
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, font_dir='fonts'):
         self.context = DrawContext(width, height)
         self.context.font_normal = ImageFont.truetype(os.environ['NSDASH_FONT'], size=30)
         self.context.font_small = ImageFont.truetype(os.environ['NSDASH_FONT'], size=18)
-        self.context.font_weather_icons = ImageFont.truetype(os.path.join('fonts', 'weather-iconic.ttf'), size=80)
-        self.context.font_icons_small = ImageFont.truetype(os.path.join('fonts', 'weather-iconic.ttf'), size=40)
+        self.context.font_weather_icons = ImageFont.truetype(os.path.join(font_dir, 'weather-iconic.ttf'), size=80)
+        self.context.font_icons_small = ImageFont.truetype(os.path.join(font_dir, 'weather-iconic.ttf'), size=40)
 
     def clear_image(self):
         self.context.draw.rectangle((0, 0, self.context.width, 
