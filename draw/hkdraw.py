@@ -38,11 +38,13 @@ class HKDraw:
         draw_current(context, 120, y1, 140, 80, weatherData)
         draw_temp(context, 260, y1, 140, 64, weatherData)
         draw_wind(context, 400, y1, 140, 80, 28, weatherData)
-        draw_forecast(context, 120, y1 + 110, 400, 0, weatherData)
-        draw_forecast_table(context, 120, 240, 100, 30, weatherData)
-        if weatherData["alarm"] == "1":
-            draw_warning(context, 10, 150, 700, 200, weatherData)
-        
+        isWarningActive = weatherData["alarm"] == "1"
+        forecast_x = 10 if isWarningActive else 120
+        draw_forecast(context, forecast_x, y1 + 110, 400, 0, weatherData)
+        draw_forecast_table(context, forecast_x, 240, 100, 30, weatherData)
+        if isWarningActive:
+            draw_warning(context, forecast_x + 400, 150, 790 - forecast_x - 400, 200, weatherData)
+
         # Moon
         ephemData = data["ephem"]
         draw_moon_phase(context, 748, 80, 36, ephemData)
@@ -52,8 +54,13 @@ class HKDraw:
 
         # Nightscout
         nightScoutData = data["nightscout"]
-        draw_nightscout(context, 650, self.context.height-100, 300, 100, nightScoutData)
+        if not isWarningActive:
+            # Normal case
+            draw_nightscout(context, 650, self.context.height-36-10, 300, 100, nightScoutData)
+        else:
+            # Warning gets in the way
+            draw_nightscout(context, 500, 10, 300, 100, nightScoutData)
 
         # Birthdays
         birthdayData = data["birthdays"]
-        draw_birthdays(context, 10, self.context.height-50, birthdayData)
+        draw_birthdays(context, 10, self.context.height-28, birthdayData)
