@@ -24,7 +24,7 @@ try:
     epd = epd2in13_V2.EPD()
     logging.info("init and Clear")
     epd.init(epd.FULL_UPDATE)
-    epd.displayPartBaseImage(epd.getbuffer(nsdraw.image))
+    epd.displayPartBaseImage(epd.getbuffer(nsdraw.context.image))
     epd.init(epd.PART_UPDATE)
 
     while True:
@@ -35,15 +35,15 @@ try:
         if datetime.now().minute == 0:
             logging.info("Periodical full clear")
             epd.init(epd.FULL_UPDATE)
-            nsdraw.clear_image()
-            epd.displayPartBaseImage(epd.getbuffer(nsdraw.image))
+            nsdraw.context.clear_image()
+            epd.displayPartBaseImage(epd.getbuffer(nsdraw.context.image))
             epd.init(epd.PART_UPDATE)
 
         # Draw
         nsdraw.draw_data(data)
 
         # Display
-        epd.displayPartial(epd.getbuffer(nsdraw.image.rotate(180)))
+        epd.displayPartial(epd.getbuffer(nsdraw.context.image.rotate(180)))
 
         # Sleep until the next minute
         seconds_to_go = 60 - datetime.now().second

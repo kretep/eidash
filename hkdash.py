@@ -55,7 +55,7 @@ try:
         draw_ns_pixel(data["nightscout"])
 
         # Display
-        epd.display(epd.getbuffer(hkdraw.image))
+        epd.display(epd.getbuffer(hkdraw.context.image))
 
         # Sleep until the next minute
         now = datetime.now()
