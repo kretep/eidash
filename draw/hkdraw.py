@@ -15,6 +15,7 @@ class HKDraw:
         self.context = DrawContext(width, height)
         self.context.font_normal = ImageFont.truetype(os.environ['NSDASH_FONT'], size=30)
         self.context.font_small = ImageFont.truetype(os.environ['NSDASH_FONT'], size=18)
+        self.context.font_time = self.context.font_normal
         self.context.font_weather_icons = ImageFont.truetype(os.path.join(font_dir, 'weather-iconic.ttf'), size=80)
         self.context.font_icons_small = ImageFont.truetype(os.path.join(font_dir, 'weather-iconic.ttf'), size=40)
 
@@ -30,7 +31,7 @@ class HKDraw:
         
         # Date & time
         draw_date(context, 10, 4)
-        draw_time(context, self.context.width - 4, 4, context.font_normal)
+        draw_time(context, self.context.width - 4, 4)
         
         # Weather
         y1 = 60
@@ -59,7 +60,7 @@ class HKDraw:
             draw_nightscout(context, 650, self.context.height-36-10, 300, 100, nightScoutData)
         else:
             # Warning gets in the way
-            draw_nightscout(context, 500, 10, 300, 100, nightScoutData)
+            draw_nightscout(context, 500, 10, 150, 100, nightScoutData)
 
         # Birthdays
         birthdayData = data["birthdays"]
