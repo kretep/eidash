@@ -35,12 +35,14 @@ class HKDraw:
         
         # Weather
         y1 = 60
+        w1 = 140
+        x1 = (self.context.width - 3 * w1) / 2
         weatherData = data["weather"]
-        draw_current(context, 120, y1, 140, 80, weatherData)
-        draw_temp(context, 260, y1, 140, 64, weatherData)
-        draw_wind(context, 400, y1, 140, 80, 28, weatherData)
+        draw_current(context, x1, y1, w1, 80, weatherData)
+        draw_temp(context, x1+w1, y1, w1, 64, weatherData)
+        draw_wind(context, x1+2*w1, y1, w1, 80, 28, weatherData)
         isWarningActive = weatherData["alarm"] == "1"
-        forecast_x = 10 if isWarningActive else 120
+        forecast_x = 10 if isWarningActive else x1
         draw_forecast(context, forecast_x, y1 + 110, 400, 0, weatherData)
         draw_forecast_table(context, forecast_x, 240, 100, 30, weatherData)
         if isWarningActive:
@@ -57,7 +59,7 @@ class HKDraw:
         nightScoutData = data["nightscout"]
         if not isWarningActive:
             # Normal case
-            draw_nightscout(context, 650, self.context.height-36-10, 300, 100, nightScoutData)
+            draw_nightscout(context, 650, self.context.height-36-10, 150, 36+10, nightScoutData)
         else:
             # Warning gets in the way
             draw_nightscout(context, 500, 10, 150, 100, nightScoutData)
