@@ -6,7 +6,7 @@ from .moonphase import *
 from .nightscout import *
 from .weather import *
 from .birthdays import *
-from draw.sunspots import draw_sunspots
+from draw.sunspots import draw_sunspot_number, draw_sunspots
 
 
 class HKDraw:
@@ -54,6 +54,7 @@ class HKDraw:
 
         # Sunspots
         draw_sunspots(context, 10, 80-36, 72, 72, data["sunspots"])
+        draw_sunspot_number(context, 10, 120, 72, 20, data["sunspot_number"])
 
         # Nightscout
         nightScoutData = data["nightscout"]
