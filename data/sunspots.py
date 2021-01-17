@@ -38,19 +38,40 @@ class SunspotData:
         img = cv2.cvtColor(img_original, cv2.COLOR_BGR2GRAY)
         _, img_thresh = cv2.threshold(img, 140, 255, cv2.THRESH_BINARY)
 
-        # Embiggen sunspots
-        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))
-        img_erode = cv2.erode(img_thresh, kernel)
-
         # Process background
-        kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (45, 45))
-        img_dilate = cv2.dilate(img_erode, kernel2)
-        img_invert = 255 - img_dilate
+        bg_kernel1 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))
+        bg_erode = cv2.erode(img_thresh, bg_kernel1) # erode captions
+        bg_kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
+        bg_dilate = cv2.dilate(bg_erode, bg_kernel2) # thicken circle
+        bg_invert = ~bg_dilate
+
+        # Embiggen sunspots
+        # Bigger kernel for erosion than dilation, resulting in net growth
+        # proportional to the original size.
+        dilate_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        erode_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
+        img_combine = img_thresh.copy()        # for the result
+        img_dilate_cache = img_thresh.copy()   # keep cache for accumulative dilation
+        # Erode and dilate alternatingly. As the outer loop progresses, only the bigger
+        # spots are not dilated away and get embiggened proportionally more (inner loop)
+        for i in range(1, 4):
+            # Erode (embiggen) first, to make sure we don't lose the smallest spots.
+            img_erode = cv2.erode(img_dilate_cache, erode_kernel)
+            for j in range(i-1):
+                img_erode = cv2.erode(img_erode, erode_kernel)
+
+            # Combine the result with what we have
+            img_combine = cv2.min(img_combine, img_erode)
+
+            # Dilate (ensmallen) to remove the smallest spots for the next round
+            img_dilate_cache = cv2.dilate(img_dilate_cache, dilate_kernel)
 
         # Combining with background results in ring outline, while keeping sunspots
-        img_combine = cv2.max(img_invert, img_erode)
-        img_resize = cv2.resize(img_combine, (72, 72), interpolation=cv2.INTER_NEAREST)
+        img_combine = cv2.max(img_combine, bg_invert)
 
+        # Resize
+        img_resize = cv2.resize(img_combine, (72, 72), interpolation=cv2.INTER_NEAREST)
+        
         return img_resize
 
     def needs_refetch(self):

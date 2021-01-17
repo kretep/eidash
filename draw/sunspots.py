@@ -1,9 +1,11 @@
 from PIL import Image
+import numpy as np
 
 def draw_sunspots(context, x, y, w, h, data):
-    img = Image.fromarray(data)
-    region = (x, y, x + w, y + h)
-    context.image.paste(img, region)
+    if isinstance(data, np.ndarray):
+        img = Image.fromarray(data)
+        region = (x, y, x + w, y + h)
+        context.image.paste(img, region)
 
 def draw_sunspot_number(context, x, y, w, h, data):
     text = data["sunspot_number"]
