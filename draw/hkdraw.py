@@ -8,6 +8,7 @@ from .weather import *
 from .birthdays import *
 from draw.sunspots import draw_sunspot_number, draw_sunspot_image
 from .buienradar import draw_buienradar_chart
+from .planets import draw_planets
 
 class HKDraw:
 
@@ -42,9 +43,9 @@ class HKDraw:
         draw_temp(context, x1+w1, y1, w1, 64, weatherData)
         draw_wind(context, x1+2*w1, y1, w1, 80, 28, weatherData)
         isWarningActive = weatherData["alarm"] == "1"
-        forecast_x = 10 if isWarningActive else x1
-        draw_forecast(context, forecast_x, y1 + 110, 400, 0, weatherData)
-        draw_forecast_table(context, forecast_x, 240, 100, 30, weatherData)
+        forecast_x = 10 if isWarningActive else 90
+        draw_forecast_table(context, forecast_x, y1 + 110, 100, 30, weatherData)
+        draw_forecast(context, forecast_x + 400, y1 + 110, 300, 0, weatherData)
         if isWarningActive:
             draw_warning(context, forecast_x + 400, 150, 790 - forecast_x - 400, 200, weatherData)
 
@@ -58,6 +59,9 @@ class HKDraw:
         # Sunspots
         draw_sunspot_image(context, 10, 80-36, 72, 72, data["sunspot_image"])
         draw_sunspot_number(context, 10, 120, 72, 20, data["sunspot_number"])
+
+        # Planets
+        draw_planets(context, 10, 320, 600, 159, ephemData["positions"])
 
         # Nightscout
         nightScoutData = data["nightscout"]
