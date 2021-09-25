@@ -1,5 +1,7 @@
-# Nightscout Dashboard
-Shows [Nightscout](http://www.nightscout.info) data on a [Waveshare](https://www.waveshare.com) e-Paper display.
+# E-Ink Dashboard
+A number of e-ink dashboards showing various types of information.
+
+*** Shows [Nightscout](http://www.nightscout.info) data on a [Waveshare](https://www.waveshare.com) e-Paper display.
 
 Based on:
 nightscout-osx-menubar: https://github.com/mddub/nightscout-osx-menubar
@@ -18,12 +20,24 @@ sudo apt-get install python3-pip
 sudo apt-get install python3-pil
 sudo apt-get install python3-numpy
 sudo pip3 install RPi.GPIO
-sudo pip3 install ephem
 ```
 
 Do not install pil and numpy with pip, as these do not install some required native libraries.
 
 It doesn't seem there is an up-to-date packaged distribution of the waveshare epd libraries, so lib/waveshare_epd is simply a copy of the libraries at https://github.com/waveshare/e-Paper/tree/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd
+
+These libraries are required depending on which modules you want to use:
+```
+sudo pip3 install ephem                 # for calculating moon phases
+sudo pip3 install --pre gql[requests]   # for birthday data (graphql endpoint)
+sudo pip3 install opencv-python         # for sunspot image processing
+sudo apt-get install libopenjp2-7       # for opencv
+sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng-dev
+sudo apt-get install libilmbase-dev libopenexr-dev libgstreamer1.0-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install libgtk2.0-dev libgtk-3-dev
+sudo apt-get install libatlas-base-dev gfortran
+```
 
 ## Enable SPI
 In `sudo raspi-config` > Interface options > SPI, enable SPI.
@@ -41,9 +55,10 @@ export NSDASH_URL=<your nightscout site>
 export NSDASH_FONT=<path to your font file>
 export HKDASH_WL_KEY=<weerlive API key>
 export HKDASH_WL_LOCATION=<weerlive location>
+export EIDASH_SUNSPOTS_URL=<sunspot url>
 ```
 
-## Install locale
+## Install locale (optional)
 
 List installed locales: `locale -a`
 
@@ -52,6 +67,13 @@ Generate locales:
 sudo dpkg-reconfigure locales
 ```
 Use space bar to select, use None for default.
+
+## Auto start at boot
+
+Add to `crontab -e` or `sudo crontab -e` (if using neopixel):
+```
+@reboot cd /home/pi/repos/nsdash && python3 nsdash.py >> nsdash.log 2>&1
+```
 
 ## Connect e-Paper HAT with wires
 
