@@ -13,6 +13,7 @@ weather_icons = {
     "sneeuw": "\ue92b",
     "bewolkt": "\ue902",
     "halfbewolkt": "\ue92d",
+    "lichtbewolkt": "\ue92d",
     "zwaarbewolkt": "\ue90b",
     "nachtmist": "\ue920",
     "helderenacht": "\ue926",
@@ -21,7 +22,7 @@ weather_icons = {
 
 def draw_current(context, x, y, w, h, data):
     # Icon
-    icon_text = weather_icons[data["image"]]
+    icon_text = weather_icons.get(data["image"], "?")
     icon_dim = context.draw.textsize(icon_text, font=context.font_weather_icons)
     context.draw.text((x + w/2 - icon_dim[0]/2, y-10), icon_text, 
         font=context.font_weather_icons)
