@@ -14,6 +14,7 @@ from data.ephem import EphemData
 from data.birthdays import BirthdayData
 from data.sunspot_image import SunspotImage
 from data.sunspot_number import SunspotNumber
+from data.buienradar_text import BuienradarText
 
 from draw.hkdraw import HKDraw
 from pixel.nightscout_pixel import draw_ns_pixel
@@ -37,6 +38,7 @@ try:
     birthdayData = BirthdayData()
     sunspotImage = SunspotImage()
     sunspotNumber = SunspotNumber()
+    buienradarText = BuienradarText()
     hkdraw = HKDraw(width, height)
 
     while True:
@@ -47,7 +49,8 @@ try:
             "ephem": ephemData.get_data(),
             "birthdays": birthdayData.get_data(),
             "sunspot_image": sunspotImage.get_data(),
-            "sunspot_number": sunspotNumber.get_data()
+            "sunspot_number": sunspotNumber.get_data(),
+            "buienradar_text": buienradarText.get_data()
         }
 
         # Draw

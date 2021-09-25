@@ -7,7 +7,7 @@ from .nightscout import *
 from .weather import *
 from .birthdays import *
 from draw.sunspots import draw_sunspot_number, draw_sunspot_image
-
+from .buienradar import draw_buienradar_chart
 
 class HKDraw:
 
@@ -47,6 +47,9 @@ class HKDraw:
         draw_forecast_table(context, forecast_x, 240, 100, 30, weatherData)
         if isWarningActive:
             draw_warning(context, forecast_x + 400, 150, 790 - forecast_x - 400, 200, weatherData)
+
+        # Buienradar
+        draw_buienradar_chart(context, 10, 150, 80, 80, data["buienradar_text"])
 
         # Moon
         ephemData = data["ephem"]
