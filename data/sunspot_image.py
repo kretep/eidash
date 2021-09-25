@@ -4,7 +4,7 @@ import requests
 import numpy as np
 import cv2
 
-class SunspotData:
+class SunspotImage:
 
     def __init__(self):
         self.data = {}

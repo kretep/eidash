@@ -12,7 +12,7 @@ from data.nightscout import NightscoutData
 from data.weather import WeatherData
 from data.ephem import EphemData
 from data.birthdays import BirthdayData
-from data.sunspots import SunspotData
+from data.sunspot_image import SunspotImage
 from data.sunspot_number import SunspotNumber
 
 from draw.hkdraw import HKDraw
@@ -35,7 +35,7 @@ try:
     weatherData = WeatherData()
     ephemData = EphemData()
     birthdayData = BirthdayData()
-    sunspotData = SunspotData()
+    sunspotImage = SunspotImage()
     sunspotNumber = SunspotNumber()
     hkdraw = HKDraw(width, height)
 
@@ -46,7 +46,7 @@ try:
             "weather": weatherData.get_data(),
             "ephem": ephemData.get_data(),
             "birthdays": birthdayData.get_data(),
-            "sunspots": sunspotData.get_data(),
+            "sunspot_image": sunspotImage.get_data(),
             "sunspot_number": sunspotNumber.get_data()
         }
 

@@ -1,7 +1,7 @@
 from PIL import Image
 import numpy as np
 
-def draw_sunspots(context, x, y, w, h, data):
+def draw_sunspot_image(context, x, y, w, h, data):
     if isinstance(data, np.ndarray):
         img = Image.fromarray(data)
         region = (x, y, x + w, y + h)
