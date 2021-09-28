@@ -32,32 +32,35 @@ try:
     logging.info("Init")
     epd.init()
 
-    nightscoutData = NightscoutData()
-    weatherData = WeatherData()
-    ephemData = EphemData()
-    birthdayData = BirthdayData()
-    sunspotImage = SunspotImage()
-    sunspotNumber = SunspotNumber()
-    buienradarText = BuienradarText()
+    # Initialize data sources
+    dataSources = {
+        "nightscout": NightscoutData(),
+        "weather": WeatherData(),
+        "ephem": EphemData(),
+        "birthdays": BirthdayData(),
+        "sunspot_image": SunspotImage(),
+        "sunspot_number": SunspotNumber(),
+        "buienradar_text": BuienradarText()
+    }
+
+    # Initialize drawing target
     hkdraw = HKDraw(width, height)
 
     while True:
         # Retrieve data
-        data = {
-            "nightscout": nightscoutData.get_data(),
-            "weather": weatherData.get_data(),
-            "ephem": ephemData.get_data(),
-            "birthdays": birthdayData.get_data(),
-            "sunspot_image": sunspotImage.get_data(),
-            "sunspot_number": sunspotNumber.get_data(),
-            "buienradar_text": buienradarText.get_data()
-        }
+        data = {}
+        for key, source in dataSources.items():
+            try:
+                data[key] = source.get_data()
+            except Exception as err:
+                data[key] = { "error": str(err) }
 
         # Draw
         hkdraw.draw_data(data)
 
         # Pixel
-        draw_ns_pixel(data["nightscout"])
+        if not "error" in data["nightscout"]:
+            draw_ns_pixel(data["nightscout"])
 
         # Display
         epd.display(epd.getbuffer(hkdraw.context.image))
