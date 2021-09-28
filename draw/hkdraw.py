@@ -52,16 +52,14 @@ class HKDraw:
         # Buienradar
         draw_buienradar_chart(context, 10, 150, 80, 80, data["buienradar_text"])
 
-        # Moon
+        # Moon phase and planets
         ephemData = data["ephem"]
         draw_moon_phase(context, 748, 80, 36, ephemData)
+        draw_planets(context, 10, 320, 600, 159, ephemData)
 
         # Sunspots
         draw_sunspot_image(context, 10, 80-36, 72, 72, data["sunspot_image"])
         draw_sunspot_number(context, 10, 120, 72, 20, data["sunspot_number"])
-
-        # Planets
-        draw_planets(context, 10, 320, 600, 159, ephemData["positions"])
 
         # Nightscout
         nightScoutData = data["nightscout"]
