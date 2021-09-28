@@ -84,7 +84,7 @@ def draw_temp(context, x, y, w, h, data):
 
     # Wind chill
     text_dim = context.draw.textsize(text, context.font_normal)
-    text2 = f'gevoel {data["gtemp"]}°C'
+    text2 = f'gevoel {data["gtemp"]}'
     context.image_text.write_text_box(x, y+text_dim[1]+4, text2, w, font=context.font_small,
         align='center', color=context.black)
 

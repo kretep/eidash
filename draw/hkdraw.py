@@ -72,4 +72,4 @@ class HKDraw:
 
         # Birthdays
         birthdayData = data["birthdays"]
-        draw_birthdays(context, 10, self.context.height-28, birthdayData)
+        draw_birthdays(context, 100, y1-20, birthdayData)
