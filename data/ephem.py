@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from ephem import *
 
 class EphemData:
@@ -7,9 +7,11 @@ class EphemData:
         pass
 
     def get_data(self):
+        now = datetime.datetime.now()
         return {
-            'moon_age_fraction': self.get_moon_age_fraction(datetime.now()),
-            'positions': self.get_planet_positions(datetime.now())
+            'moon_age_fraction': self.get_moon_age_fraction(now),
+            'positions': self.get_planet_positions(now),
+            'sun_positions': self.get_sun_path(),
         }
 
     def get_moon_age_fraction(self, date):
@@ -37,4 +39,15 @@ class EphemData:
         for body in bodies:
             body.compute(date)
             positions[body.name] = (body.ra / pi * 180, body.dec / pi * 180)
+        return positions
+
+    def get_sun_path(self):
+        ref_date = datetime.date(2021, 3, 21)
+        sun = Sun()
+        positions = []
+        for day in range(0, 365, 5):
+            delta = datetime.timedelta(days = day)
+            date = ref_date + delta
+            sun.compute(date)
+            positions.append((sun.ra / pi * 180, sun.dec / pi * 180))
         return positions
