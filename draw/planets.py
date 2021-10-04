@@ -11,6 +11,14 @@ def draw_planets(context, x, y, w, h, data):
         i2 = i + 1
         p1 = equatorial_to_pixel(positions[i][0], positions[i][1])
         p2 = equatorial_to_pixel(positions[i2][0], positions[i2][1])
+        draw_dashed_line(context, p1[0], p1[1], p2[0], p2[1], 2)
+
+    # Horizon
+    positions = data["horizon"]
+    for i in range(len(positions) - 1):
+        i2 = i + 1
+        p1 = equatorial_to_pixel(positions[i][0], positions[i][1])
+        p2 = equatorial_to_pixel(positions[i2][0], positions[i2][1])
         context.draw.line((p1[0], p1[1], p2[0], p2[1]))
 
     # Planets
