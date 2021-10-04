@@ -50,7 +50,7 @@ class HKDraw:
             draw_warning(context, forecast_x + 400, 150, 790 - forecast_x - 400, 200, weatherData)
 
         # Buienradar
-        draw_buienradar_chart(context, 10, 150, 80, 80, data["buienradar_text"])
+        draw_buienradar_chart(context, 10, 150, 74, 74, data["buienradar_text"])
 
         # Moon phase and planets
         ephemData = data["ephem"]
