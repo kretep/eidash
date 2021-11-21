@@ -35,7 +35,7 @@ class BuienradarText:
     def process_data(self, data):
         # Split lines, filter empty values
         lines = list(filter(None, data.split('\n')))
-        tuples = [(line.split('|')[1].strip().replace(",", "."), line.split('|')[0].strip()) for line in lines]
+        tuples = [(line.split('|')[1].strip(), line.split('|')[0].strip().replace(",", ".")) for line in lines]
         return tuples
 
     def needs_refetch(self):
