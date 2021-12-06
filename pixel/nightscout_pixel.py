@@ -44,3 +44,6 @@ def draw_ns_pixel(data):
 def set_pixel_color(hue, saturation, value):
     rgb = colorsys.hsv_to_rgb(hue / 360, saturation, value)
     pixels.fill([int(c * 255) for c in rgb])
+
+def turn_off_pixel():
+    pixels.fill([0, 0, 0])

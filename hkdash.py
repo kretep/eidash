@@ -17,7 +17,7 @@ from data.sunspot_number import SunspotNumber
 from data.buienradar_text import BuienradarText
 
 from draw.hkdraw import HKDraw
-from pixel.nightscout_pixel import draw_ns_pixel
+from pixel.nightscout_pixel import draw_ns_pixel, turn_off_pixel
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -46,24 +46,38 @@ try:
     # Initialize drawing target
     hkdraw = HKDraw(width, height)
 
+    isStandby = False
+
     while True:
-        # Retrieve data
-        data = {}
-        for key, source in dataSources.items():
-            try:
-                data[key] = source.get_data()
-            except Exception as err:
-                data[key] = { "error": str(err) }
+        # Check if we should sleep
+        now = datetime.now()
+        if now.hour <= 6:
+            if not isStandby:
+                hkdraw.clear_image()
+                epd.display(epd.getbuffer(hkdraw.context.image))
+                turn_off_pixel()
+                isStandby = True
+        else:
+            isStandby = False
 
-        # Draw
-        hkdraw.draw_data(data)
+        if not isStandby:
+            # Retrieve data
+            data = {}
+            for key, source in dataSources.items():
+                try:
+                    data[key] = source.get_data()
+                except Exception as err:
+                    data[key] = { "error": str(err) }
 
-        # Pixel
-        if not "error" in data["nightscout"]:
-            draw_ns_pixel(data["nightscout"])
+            # Draw
+            hkdraw.draw_data(data)
 
-        # Display
-        epd.display(epd.getbuffer(hkdraw.context.image))
+            # Pixel
+            if not "error" in data["nightscout"]:
+                draw_ns_pixel(data["nightscout"])
+
+            # Display
+            epd.display(epd.getbuffer(hkdraw.context.image))
 
         # Sleep until the next update
         now = datetime.now()
