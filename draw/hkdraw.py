@@ -1,3 +1,4 @@
+import logging
 from draw.drawcontext import DrawContext
 from PIL import Image, ImageDraw, ImageFont
 import os
@@ -27,6 +28,7 @@ class HKDraw:
         
     def draw_data(self, data):
         context = self.context
+        logging.info("Drawing data")
 
         # Clear
         self.clear_image()
@@ -82,6 +84,7 @@ class HKDraw:
 
         # Actually execute each draw call with proper error handling
         for func in draw_calls:
+            logging.info("DRAWING " + func.__name__)
             try:
                 func()
             except Exception as err:

@@ -7,6 +7,7 @@ import locale
 
 import logging
 from lib.waveshare_epd import epd7in5_V2
+import json
 
 from data.nightscout import NightscoutData
 from data.weather import WeatherData
@@ -64,10 +65,15 @@ try:
             # Retrieve data
             data = {}
             for key, source in dataSources.items():
+                logging.info("GET DATA for " + key)
                 try:
                     data[key] = source.get_data()
                 except Exception as err:
                     data[key] = { "error": str(err) }
+
+            # Save the data (for debugging)
+            with open('debug_data.json', 'w') as outfile:
+                json.dump(data, outfile)
 
             # Draw
             hkdraw.draw_data(data)
@@ -83,7 +89,7 @@ try:
         now = datetime.now()
         minutes_to_go = 4 - now.minute % 5
         seconds_to_go = 60 - now.second + minutes_to_go * 60
-        print("Sleeping for ", seconds_to_go, " seconds")
+        logging.info(f"Sleeping for {seconds_to_go} seconds")
         time.sleep(seconds_to_go)
 
 except IOError as e:
