@@ -36,7 +36,7 @@ class HKDraw:
         # Collect all draw calls to execute later
         draw_calls = []
         def add_call(func, *args, **kwargs):
-            draw_calls.append(functools.partial(func, *args, **kwargs))
+            draw_calls.append((func.__name__, functools.partial(func, *args, **kwargs)))
         
         # Date & time
         add_call(draw_date, context, 10, 4)
@@ -66,7 +66,7 @@ class HKDraw:
         add_call(draw_planets, context, 10, 330, 600, 130, ephemData)
 
         # Sunspots
-        add_call(draw_sunspot_image, context, 10, 80-36, 72, 72, data["sunspot_image"])
+        #add_call(draw_sunspot_image, context, 10, 80-36, 72, 72, data["sunspot_image"])
         add_call(draw_sunspot_number, context, 10, 120, 72, 20, data["sunspot_number"])
 
         # Nightscout
@@ -83,9 +83,10 @@ class HKDraw:
         add_call(draw_birthdays, context, 100, y1-20, birthdayData)
 
         # Actually execute each draw call with proper error handling
-        for func in draw_calls:
-            logging.info("DRAWING " + func.__name__)
+        for call in draw_calls:
+            logging.info("DRAWING " + call[0])
             try:
-                func()
+                call[1]()   # Execute the functools.partial
             except Exception as err:
                 print(err) #TODO: draw error message
+

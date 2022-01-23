@@ -39,7 +39,7 @@ try:
         "weather": WeatherData(),
         "ephem": EphemData(),
         "birthdays": BirthdayData(),
-        "sunspot_image": SunspotImage(),
+#        "sunspot_image": SunspotImage(),
         "sunspot_number": SunspotNumber(),
         "buienradar_text": BuienradarText()
     }
