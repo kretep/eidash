@@ -51,11 +51,12 @@ class HKDraw:
         add_call(draw_temp, context, x1+w1, y1, w1, 64, weatherData)
         add_call(draw_wind, context, x1+2*w1, y1, w1, 80, 28, weatherData)
         isWarningActive = weatherData["alarm"] == "1"
-        forecast_x = 10 if isWarningActive else 90
+        forecast_x = 90
+        forecast_text_y = 150 if isWarningActive else y1 + 110
         add_call(draw_forecast_table, context, forecast_x, y1 + 110, 100, 30, weatherData)
-        add_call(draw_forecast, context, forecast_x + 400, y1 + 110, 300, 0, weatherData)
+        add_call(draw_forecast, context, forecast_x + 400, forecast_text_y, 300, 0, weatherData)
         if isWarningActive:
-            add_call(draw_warning, context, forecast_x + 400, 150, 790 - forecast_x - 400, 200, weatherData)
+            add_call(draw_warning_symbol, context, x1+3*w1, y1, 28, 6)
 
         # Buienradar
         add_call(draw_buienradar_chart, context, 10, 150, 74, 74, data["buienradar_text"])
@@ -71,12 +72,7 @@ class HKDraw:
 
         # Nightscout
         nightScoutData = data["nightscout"]
-        if not isWarningActive:
-            # Normal case
-            add_call(draw_nightscout, context, 650, self.context.height-36-10, 150, 36+10, nightScoutData)
-        else:
-            # Warning gets in the way
-            add_call(draw_nightscout, context, 500, 10, 150, 100, nightScoutData)
+        add_call(draw_nightscout, context, 650, self.context.height-36-10, 150, 36+10, nightScoutData)
 
         # Birthdays
         birthdayData = data["birthdays"]

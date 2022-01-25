@@ -72,9 +72,7 @@ def draw_arrow(context, cx, cy, r, angle, line_width):
     pts = np.einsum('rc,pc->pr', rotate, pts)
     pts = np.einsum('rc,pc->pr', scale_translate, pts)
     pts = [tuple(p[:-1]) for p in pts]
-    context.draw.polygon(pts, outline=context.black, fill=None)
-    context.draw.line([*pts, pts[0]], width=line_width, fill=context.black)
-    map(lambda p: context.draw.circle(p, r, context.black), pts)
+    context.draw_pretty_polygon(pts, line_width=line_width, fill=context.white)
 
 def draw_temp(context, x, y, w, h, data):
     # Temperature
@@ -90,13 +88,21 @@ def draw_temp(context, x, y, w, h, data):
 
 def draw_forecast(context, x, y, w, h, data):
     text = f'Verw: {data["verw"]}'
+    if data["alarm"] == "1":
+        text += f' | {data["alarmtxt"]}'
     context.image_text.write_text_box(x, y, text, box_width=w, \
         font=context.font_small, color=context.black)
 
-def draw_warning(context, x, y, w, h, data):
-    text = data["alarmtxt"]
-    context.image_text.write_text_box(x, y, text, box_width=w, \
-        font=context.font_small, color=context.black)
+def draw_warning_symbol(context, x, y, r, line_width):
+    x += r
+    y += r
+    pts = np.array([
+        (x + 0.0 * r, y - 0.75 * r),
+        (x + 0.87 * r, y + 0.75 * r),
+        (x - 0.87 * r, y + 0.75 * r),
+    ])
+    pts = [tuple(p) for p in pts]
+    context.draw_pretty_polygon(pts, line_width=line_width, fill=context.black)
 
 def draw_forecast_table(context, x, y, column_width, row_height, data):
     draw = context.draw

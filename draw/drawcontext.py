@@ -14,3 +14,18 @@ class DrawContext:
 
     def clear_image(self):
         self.draw.rectangle((0, 0, self.width, self.height), fill=self.white)
+
+    def draw_circle(self, coords, r, *args, **kwargs):
+        x, y = coords
+        self.draw.ellipse((x - r, y - r, x + r, y + r), *args, **kwargs)
+
+    def draw_pretty_polygon(self, points, line_width, outline=0, fill=1):
+        # Draw the filled polygon first
+        self.draw.polygon(points, outline=outline, fill=fill)
+
+        # Draw the outline
+        self.draw.line([*points, points[0]], width=line_width, fill=outline)
+
+        # Rounded connectors
+        for p in points:
+            self.draw_circle(p, line_width/3, fill=outline)
