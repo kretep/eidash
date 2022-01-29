@@ -96,13 +96,16 @@ def draw_forecast(context, x, y, w, h, data):
 def draw_warning_symbol(context, x, y, r, line_width):
     x += r
     y += r
-    pts = np.array([
+    # Triangle
+    pts = [
         (x + 0.0 * r, y - 0.75 * r),
         (x + 0.87 * r, y + 0.75 * r),
-        (x - 0.87 * r, y + 0.75 * r),
-    ])
-    pts = [tuple(p) for p in pts]
+        (x - 0.87 * r, y + 0.75 * r)]
     context.draw_pretty_polygon(pts, line_width=line_width, fill=context.black)
+    # Exclamation mark
+    pts = [(x, y - 0.3 * r), (x, y + 0.3 * r)]
+    context.draw_pretty_polygon(pts, line_width=line_width, fill=context.white, outline=context.white)
+    context.draw_circle((x, y + 0.6 * r), line_width/2, fill=context.white)
 
 def draw_forecast_table(context, x, y, column_width, row_height, data):
     draw = context.draw
