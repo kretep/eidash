@@ -65,15 +65,15 @@ try:
             # Retrieve data
             data = {}
             for key, source in dataSources.items():
-                # logging.info("GET DATA for " + key)
+                logging.info("GET DATA for " + key)
                 try:
                     data[key] = source.get_data()
                 except Exception as err:
                     data[key] = { "error": str(err) }
 
             # Save the data (for debugging)
-            with open('debug_data.json', 'w') as outfile:
-                json.dump(data, outfile)
+            # with open('debug_data.json', 'w') as outfile:
+            #     json.dump(data, outfile)
 
             # Draw
             hkdraw.draw_data(data)
