@@ -67,7 +67,7 @@ class HKDraw:
         add_call(draw_planets, context, 10, 330, 600, 130, ephemData)
 
         # Sunspots
-        #add_call(draw_sunspot_image, context, 10, 80-36, 72, 72, data["sunspot_image"])
+        add_call(draw_sunspot_image, context, 10, 80-36, 72, 72, data["sunspot_image"])
         add_call(draw_sunspot_number, context, 10, 120, 72, 20, data["sunspot_number"])
 
         # Nightscout

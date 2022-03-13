@@ -39,7 +39,7 @@ try:
         "weather": WeatherData(),
         "ephem": EphemData(),
         "birthdays": BirthdayData(),
-#        "sunspot_image": SunspotImage(),
+        "sunspot_image": SunspotImage(),
         "sunspot_number": SunspotNumber(),
         "buienradar_text": BuienradarText()
     }
@@ -65,7 +65,7 @@ try:
             # Retrieve data
             data = {}
             for key, source in dataSources.items():
-                logging.info("GET DATA for " + key)
+                # logging.info("GET DATA for " + key)
                 try:
                     data[key] = source.get_data()
                 except Exception as err:
