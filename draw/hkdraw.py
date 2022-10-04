@@ -45,11 +45,12 @@ class HKDraw:
         # Weather
         y1 = 60
         w1 = 140
-        x1 = (self.context.width - 3 * w1) / 2
+        x1 = (self.context.width - 3.5 * w1) / 2
         weatherData = data["weather"]
         add_call(draw_current, context, x1, y1, w1, 80, weatherData)
         add_call(draw_temp, context, x1+w1, y1, w1, 64, weatherData)
         add_call(draw_wind, context, x1+2*w1, y1, w1, 80, 28, weatherData)
+        add_call(draw_atmos, context, x1+3*w1, y1, w1, 64, weatherData)
         isWarningActive = weatherData["alarm"] == "1"
         forecast_x = 90
         forecast_text_y = 150 if isWarningActive else y1 + 110

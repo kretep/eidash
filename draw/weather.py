@@ -86,6 +86,12 @@ def draw_temp(context, x, y, w, h, data):
     context.image_text.write_text_box(x, y+text_dim[1]+4, text2, w, font=context.font_small,
         align='center', color=context.black)
 
+def draw_atmos(context, x, y, w, h, data):
+    lv = data["lv"]
+    luchtd = round(float(data["luchtd"]))
+    text = f'{lv}%\n{luchtd} hPa'
+    context.draw.text((x, y), text, font=context.font_small, fill=context.black)
+
 def draw_forecast(context, x, y, w, h, data):
     text = f'Verw: {data["verw"]}'
     if data["alarm"] == "1":
