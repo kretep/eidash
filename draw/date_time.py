@@ -1,7 +1,8 @@
 from datetime import datetime
 
 def draw_date(context, x, y):
-    text = datetime.now().strftime("%A %-d %B %Y")
+    now = datetime.now()
+    text = now.strftime("%A ").capitalize() + now.strftime("%-d %B %Y")
     context.draw.text((x, y), text, font=context.font_time)
 
 def draw_time(context, x_right, y):
