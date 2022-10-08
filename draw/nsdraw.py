@@ -8,9 +8,9 @@ class NSDraw:
 
     def __init__(self, width, height):
         self.context = DrawContext(width, height)
-        self.context.font_normal = ImageFont.truetype(os.environ['NSDASH_FONT'], size=72)
-        self.context.font_small = ImageFont.truetype(os.environ['NSDASH_FONT'], size=27)
-        self.context.font_time = ImageFont.truetype(os.environ['NSDASH_FONT'], size=27)
+        self.context.font_normal = ImageFont.truetype(os.environ['NSDASH_FONT'], size=76)
+        self.context.font_small = ImageFont.truetype(os.environ['NSDASH_FONT'], size=28)
+        self.context.font_time = ImageFont.truetype(os.environ['NSDASH_FONT'], size=28)
 
     def draw_data(self, data):
         context = self.context
