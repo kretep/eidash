@@ -47,6 +47,8 @@ If you are running headless, your system likely has no fonts. Download some here
 
 Otherwise, fonts will probably be located in /usr/share/fonts/truetype/dejavu/
 
+The font used for weather icons is included, or can be downloaded from https://github.com/jackd248/weather-iconic
+
 ## Set up environment variables
 Doesn't matter where you do this, /etc/environment is a convenient place. These are required:
 
