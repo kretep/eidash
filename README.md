@@ -70,6 +70,19 @@ sudo dpkg-reconfigure locales
 ```
 Use space bar to select, use None for default.
 
+The used locale is currently hard-coded (hkdash.py, nsdash.py).
+
+## Set time zone (optional)
+
+Use `timedatectl` to set the timezone (`tzselect` doesn't work).
+
+```bash
+timedatectl                                     # Show current settings
+timedatectl list-timezones                      # List available timezones
+sudo timedatectl set-timezone Europe/Amsterdam  # Set the timezone
+```
+
+
 ## Auto start at boot
 
 Add to `crontab -e` or `sudo crontab -e` (if using neopixel):
