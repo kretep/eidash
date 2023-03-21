@@ -14,7 +14,7 @@ class NightscoutData:
 
         try:
             host = os.environ['NSDASH_URL']
-            resp = requests.get(f'{host}/api/v1/entries/sgv.json?count=2', verify=False, timeout=5)
+            resp = requests.get(f'{host}/api/v1/entries/sgv.json?count=2', verify=True, timeout=5)
                 # For the sake of keeping this portable without adding a lot of complexity, don't verify SSL certificates.
                 # https://github.com/kennethreitz/requests/issues/557
                 # Don't let bad connectivity cause the app to freeze
