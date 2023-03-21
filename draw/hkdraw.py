@@ -64,7 +64,7 @@ class HKDraw:
 
         # Moon phase and planets
         ephemData = data["ephem"]
-        add_call(draw_moon_phase, context, 748, 80, 36, ephemData)
+        add_call(draw_moon_phase, context, 748, 80, 32, ephemData)
         add_call(draw_planets, context, 10, 330, 600, 130, ephemData)
 
         # Sunspots
