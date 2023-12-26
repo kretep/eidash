@@ -13,6 +13,7 @@ from data.birthdays import BirthdayData
 from data.sunspot_image import SunspotImage
 from data.sunspot_number import SunspotNumber
 from data.buienradar_text import BuienradarText
+from data.kp_index import KpIndexData
 
 from draw.hkdraw import HKDraw
 from esp32_client import send_image
@@ -21,7 +22,8 @@ from esp32_client import send_image
 from dotenv import load_dotenv
 load_dotenv()
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.ERROR)
+logging.error(f"##### Application start at {datetime.now()} ######")
 
 try:
     locale.setlocale(locale.LC_TIME, "nl_NL.utf8")
@@ -40,7 +42,8 @@ try:
         "birthdays": BirthdayData(),
         "sunspot_image": SunspotImage(),
         "sunspot_number": SunspotNumber(),
-        "buienradar_text": BuienradarText()
+        "buienradar_text": BuienradarText(),
+        "kp_index": KpIndexData()
     }
 
     # Initialize drawing target
