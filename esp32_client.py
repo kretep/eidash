@@ -45,7 +45,7 @@ def make_request(path):
     # but will terminate the connection on every call, even when the command is
     # successful. We do want to impose and catch a timeout however.
     try:
-        requests.get(path, timeout=2)
+        requests.get(path, timeout=5)
         return True
     except requests.exceptions.Timeout as e:
         logging.error("ESP32 request timed out")
