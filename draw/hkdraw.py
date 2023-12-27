@@ -7,7 +7,7 @@ from .moonphase import *
 from .nightscout import *
 from .weather import *
 from .birthdays import *
-from draw.sunspots import draw_sunspot_number, draw_sunspot_image
+from draw.sunspots import draw_sunspot_number, draw_sunspot_image, draw_kp_index
 from .buienradar import draw_buienradar_chart
 from .planets import draw_planets
 import functools
@@ -50,7 +50,7 @@ class HKDraw:
         add_call(draw_current, context, x1, y1, w1, 80, weatherData)
         add_call(draw_temp, context, x1+w1, y1, w1, 64, weatherData)
         add_call(draw_wind, context, x1+2*w1, y1, w1, 80, 28, weatherData)
-        add_call(draw_atmos, context, 10, 230, w1, 64, weatherData, data["kp_index"])
+        add_call(draw_atmos, context, 10, 250, w1, 64, weatherData)
         isWarningActive = weatherData["alarm"] == "1"
         forecast_x = 90
         forecast_text_y = 150 if isWarningActive else y1 + 110
@@ -60,7 +60,7 @@ class HKDraw:
             add_call(draw_warning_symbol, context, x1+3*w1, y1, 28, 6)
 
         # Buienradar
-        add_call(draw_buienradar_chart, context, 10, 150, 74, 74, data["buienradar_text"])
+        add_call(draw_buienradar_chart, context, 10, 170, 74, 74, data["buienradar_text"])
 
         # Moon phase and planets
         ephemData = data["ephem"]
@@ -70,6 +70,7 @@ class HKDraw:
         # Sunspots
         add_call(draw_sunspot_image, context, 10, 80-36, 72, 72, data["sunspot_image"])
         add_call(draw_sunspot_number, context, 10, 120, 72, 20, data["sunspot_number"])
+        add_call(draw_kp_index, context, 10, 140, 140, 20, data["kp_index"])
 
         # Nightscout
         nightScoutData = data["nightscout"]
