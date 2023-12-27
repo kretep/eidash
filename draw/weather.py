@@ -18,6 +18,7 @@ weather_icons = {
     "nachtmist": "\ue920",
     "helderenacht": "\ue926",
     "wolkennacht": "\ue91a",
+    "nachtbewolkt": "\ue91a",
 }
 
 def draw_current(context, x, y, w, h, data):
