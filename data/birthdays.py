@@ -1,8 +1,6 @@
-
-from datetime import datetime
-from gql import Client, gql
-from gql.transport.requests import RequestsHTTPTransport
 import os
+import requests
+from datetime import datetime
 
 class BirthdayData:
 
@@ -17,25 +15,22 @@ class BirthdayData:
         return self.birthdays
 
     def fetch_data(self):
-        transport = RequestsHTTPTransport(url=os.environ["HKDASH_BIRTHDAY_URL"])
-        client = Client(transport=transport, fetch_schema_from_transport=False)
+        url = os.environ["HKDASH_BIRTHDAY_URL"]
 
-        query = gql("""
-        query MyQuery ($month: Int!, $day: Int!) {
-            birthdays (where: {month:{_eq: $month}, day:{_eq: $day}})
-            {
-                name
-                year
-                month
-                day
-            }
-        }
-        """)
+        # Current date
         now = datetime.now()
         params = {
-            "month": now.month,
-            "day": now.day
+            "month": f"eq.{now.month}",
+            "day": f"eq.{now.day}"
         }
 
-        result = client.execute(query, variable_values=params)
-        return result["birthdays"]
+        # Make the GET request
+        response = requests.get(url, params=params)
+
+        # Check and parse the response
+        if response.status_code == 200:
+            result = response.json()  # List of dictionaries representing the rows
+        else:
+            print(f"Error: {response.status_code}, {response.text}")
+
+        return result

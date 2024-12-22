@@ -85,6 +85,7 @@ try:
             #     draw_ns_pixel(data["nightscout"])
 
             # Display
+            logging.info("SEND IMAGE")
             send_image(hkdraw.context.image)
 
         # Sleep until the next update

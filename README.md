@@ -29,7 +29,6 @@ It doesn't seem there is an up-to-date packaged distribution of the waveshare ep
 These libraries are required depending on which modules you want to use:
 ```
 sudo pip3 install ephem                 # for calculating moon phases
-sudo pip3 install --pre gql[requests]   # for birthday data (graphql endpoint)
 sudo pip3 install opencv-python         # for sunspot image processing
 sudo apt-get install libopenjp2-7       # for opencv
 sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng-dev
